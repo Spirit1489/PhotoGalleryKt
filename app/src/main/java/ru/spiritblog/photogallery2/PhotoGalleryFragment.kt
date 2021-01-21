@@ -1,15 +1,26 @@
 package ru.spiritblog.photogallery2
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import ru.spiritblog.photogallery2.API.FlickrApi
+import ru.spiritblog.photogallery2.API.FlickrFetchr
+import ru.spiritblog.photogallery2.API.GalleryItem
+
+
+private const val TAG = "PhotoGalleryFragment"
 
 
 class PhotoGalleryFragment : Fragment() {
@@ -20,14 +31,13 @@ class PhotoGalleryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl("https://www.flickr.com/")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .build()
+        val flickrLiveData: LiveData<List<GalleryItem>> = FlickrFetchr().fetchPhotos()
+        flickrLiveData.observe(
+            this,
+            Observer { galleryItems ->
+                Log.d(TAG, "Responce received: $galleryItems")
 
-
-        val flickrApi: FlickrApi = retrofit.create(FlickrApi::class.java)
-
+            })
 
     }
 
