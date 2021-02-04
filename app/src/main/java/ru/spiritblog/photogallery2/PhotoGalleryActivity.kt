@@ -1,5 +1,7 @@
 package ru.spiritblog.photogallery2
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentTransaction
@@ -21,6 +23,15 @@ class PhotoGalleryActivity : AppCompatActivity() {
 
 
     }
+
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, PhotoGalleryActivity::class.java)
+        }
+    }
+
+
 }
 
 
