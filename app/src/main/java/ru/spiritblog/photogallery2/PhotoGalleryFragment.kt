@@ -34,7 +34,7 @@ private const val TAG = "PhotoGalleryFragment"
 private const val POLL_WORK = "POLL_WORK"
 
 
-class PhotoGalleryFragment : Fragment() {
+class PhotoGalleryFragment : VisibleFragment() {
 
 
     private lateinit var photoGalleryViewModel: PhotoGalleryViewModel
